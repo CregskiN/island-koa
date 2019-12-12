@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=dev nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,18 @@
   "bugs": {
     "url": "https://github.com/CregskiN/island-koa/issues"
   },
-  "homepage": "https://github.com/CregskiN/island-koa#readme"
+  "homepage": "https://github.com/CregskiN/island-koa#readme",
+  "dependencies": {
+    "cross-env": "^6.0.3",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.15",
+    "mysql2": "^2.0.2",
+    "nodemon": "^2.0.1",
+    "require-directory": "^2.1.1",
+    "sequelize": "^5.21.2",
+    "validator": "^12.1.0"
+  }
 }
