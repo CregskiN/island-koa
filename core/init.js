@@ -1,8 +1,8 @@
 /*
  * @Author: CregskiN 
  * @Date: 2019-12-12 16:55:20 
- * @Last Modified by:   CregskiN 
- * @Last Modified time: 2019-12-12 16:55:20 
+ * @Last Modified by: CregskiN
+ * @Last Modified time: 2019-12-14 17:30:46
  */
 const requireDirectory = require('require-directory');
 const Router = require('koa-router');
@@ -13,8 +13,8 @@ class InitManager {
     static initCore(app) {
         InitManager.app = app;
         InitManager.initLoadRouter();
-        InitManager.loadHttpException();
         InitManager.loadConfig();
+        InitManager.loadHttpException();
     }
 
     // 批量导入、注册路由
@@ -38,7 +38,7 @@ class InitManager {
         global.config = config;
     }
 
-    // 全局错误处理
+    // 全局错误处理 注入到 global.errs
     static loadHttpException() {
         const errors = require('./http-exception');
         global.errs = errors;

@@ -2,21 +2,17 @@
  * @Author: CregskiN 
  * @Date: 2019-12-11 12:02:56 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-12 16:46:08
+ * @Last Modified time: 2019-12-14 17:21:55
  */
 
 const Router = require('koa-router');
-const {
-    HttpException,
-    ParameterException
-} = require('../../../core/http-exception');
+
 const {
     PositiveIntegerValidator
 } = require('../../validators/validator');
 
 
 const router = new Router();
-
 router.prefix('/v1');
 
 router.post('/:id/classic/latest', async (ctx, next) => {
@@ -27,7 +23,7 @@ router.post('/:id/classic/latest', async (ctx, next) => {
     const body = ctx.request.body;
 
     // LinValidator 参数校验
-    const v = new PositiveIntegerValidator().validate(ctx);
+    const v = await new PositiveIntegerValidator().validate(ctx);
     const id = v.get('path.id', parsed = false);
 
     ctx.body = {

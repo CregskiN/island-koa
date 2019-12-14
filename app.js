@@ -8,9 +8,9 @@ require('./app/models/user');
 const app = new Koa(); // 应用程序对象，包含中间件
 
 app.use(catchError); // 全局异常处理，可跨层 监听错误：AOP 面向切面编程
-app.use(parser());
+app.use(parser()); // 解析postData
 
-InitManager.initCore(app);
+InitManager.initCore(app); // 全局类
 
 
 
