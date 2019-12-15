@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-12-12 17:20:07 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-14 17:52:24
+ * @Last Modified time: 2019-12-14 23:14:07
  */
 
 const {
@@ -14,14 +14,19 @@ const {
     User
 } = require('../models/user');
 
+const {
+    LoginType
+} = require('../lib/enum');
 
 // id验证
 class PositiveIntegerValidator extends LinValidator {
     constructor() {
         super();
+        
         this.id = [new Rule('isInt', '需要正整数', {
             min: 1
         })]; // 可为多条Rule
+
     }
 }
 
@@ -76,28 +81,41 @@ class RegisterValidator extends LinValidator {
 }
 
 // Token 检验
-class TokenValidator extends LinValidator{
-    constructor(){
+class TokenValidator extends LinValidator {
+    constructor() {
+        super();
+
         this.account = [
-            new Rule('isLength','长度不符合规则',{
+            new Rule('isLength', '长度不符合规则', {
                 min: 4,
                 max: 32
             })
         ];
+
         this.secret = [ // 是否需要传递密码?? //
             new Rule('isOptional'),
-            new Rule('isLength','至少6个字符',{
+            new Rule('isLength', '至少6个字符', {
                 min: 6,
                 max: 128
             })
         ];
-
-        type:
     }
+
+    validateLoginType(vals) {
+        if (!vals.body.type) {
+            throw new Error('type 必须是参数');
+        }
+        
+        if (LoginType.isThisType(vals.body.type)) {
+            throw new Error('type 参数不合法')
+        }
+    }
+
 }
 
 
 module.exports = {
     PositiveIntegerValidator,
-    RegisterValidator
+    RegisterValidator,
+    TokenValidator,
 }
