@@ -1,6 +1,9 @@
 #idea
 .idea
 
+# config
+config
+
 # Logs
 logs
 *.log
