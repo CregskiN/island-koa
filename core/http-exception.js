@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-12-12 17:41:40 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-17 22:45:32
+ * @Last Modified time: 2019-12-22 10:14:35
  */
 
 // http 错误
@@ -25,7 +25,7 @@ class ParameterException extends HttpException {
     }
 }
 
-// 
+// 成功返回数据
 class Success extends HttpException {
     constructor(msg, errorCode) {
         super();
@@ -35,6 +35,7 @@ class Success extends HttpException {
     }
 }
 
+// 没有所需资源
 class NotFound extends HttpException {
     constructor(msg, errorCode) {
         super();
@@ -44,6 +45,7 @@ class NotFound extends HttpException {
     }
 }
 
+// 授权失败
 class AuthFailed extends HttpException {
     constructor(msg, errorCode) {
         super();
@@ -53,6 +55,7 @@ class AuthFailed extends HttpException {
     }
 }
 
+// 禁止访问
 class Forbbiden extends HttpException{
     constructor(msg, errorCode) {
         super();
@@ -62,7 +65,23 @@ class Forbbiden extends HttpException{
     }
 }
 
+class LikeError extends HttpException{
+    constructor(msg, errorCode) {
+        super();
+        this.statusCode = 400;
+        this.msg = msg || '你点过赞了';
+        this.errorCode = 6002;
+    }
+}
 
+class DislikeError extends HttpException{
+    constructor(msg, errorCode) {
+        super();
+        this.statusCode = 400;
+        this.msg = msg || '你已取消点赞';
+        this.errorCode = 6002;
+    }
+}
 
 module.exports = {
     HttpException,
@@ -70,5 +89,7 @@ module.exports = {
     Success,
     NotFound,
     AuthFailed,
-    Forbbiden
+    Forbbiden,
+    LikeError,
+    DislikeError
 }

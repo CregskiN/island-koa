@@ -2,35 +2,28 @@
  * @Author: CregskiN 
  * @Date: 2019-12-12 17:20:07 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-17 18:20:43
+ * @Last Modified time: 2019-12-24 17:10:13
  */
 
-const {
-    LinValidator,
-    Rule
-} = require('../../core/lin-validator-v2');
-
-const {
-    User
-} = require('../models/user');
-
-const {
-    LoginType
-} = require('../lib/enum');
+const { LinValidator, Rule } = require('../../core/lin-validator-v2');
+const { User } = require('../models/user');
+const { LoginType } = require('../lib/enum');
 
 // id验证
 class PositiveIntegerValidator extends LinValidator {
     constructor() {
         super();
-        
-        this.id = [new Rule('isInt', '需要正整数', {
-            min: 1
-        })]; // 可为多条Rule
+
+        this.id = [
+            new Rule('isInt', '需要正整数', {
+                min: 1
+            })
+        ]; // 可为多条Rule
 
     }
 }
 
-// 参数验证
+// 注册信息验证
 class RegisterValidator extends LinValidator {
     constructor() {
         super();
@@ -80,7 +73,7 @@ class RegisterValidator extends LinValidator {
     }
 }
 
-// Token 检验
+// 验证注册token所需信息
 class TokenValidator extends LinValidator {
     constructor() {
         super();
@@ -106,7 +99,7 @@ class TokenValidator extends LinValidator {
         if (!vals.body.type) {
             throw new Error('type 必须是参数');
         }
-        
+
         if (!LoginType.isThisType(vals.body.type)) {
             throw new Error('type 参数不合法')
         }
@@ -114,9 +107,42 @@ class TokenValidator extends LinValidator {
 
 }
 
+// 验证是否有token
+class NotEmptyValidator extends LinValidator {
+    constructor() {
+        super();
+        this.token = [
+            new Rule('isLength', '不允许为空', { min: 1 })
+        ]
+    }
+}
+
+// 检测type
+function checkType(vals) {
+
+    if (!vals.body.type) {
+        throw new Error('type必须是参数');
+    }
+
+    if (!LoginType.isThisType(vals.body.type)) {
+        throw new Error('type参数不合法');
+    }
+}
+
+
+// 验证点赞api接收参数 id type
+class LikeValidator extends PositiveIntegerValidator {
+    constructor() {
+        super();
+        this.validateType = checkType;
+    }
+}
+
 
 module.exports = {
     PositiveIntegerValidator,
     RegisterValidator,
     TokenValidator,
+    NotEmptyValidator,
+    LikeValidator
 }

@@ -1,16 +1,15 @@
+/*
+ * @Author: CregskiN 
+ * @Date: 2019-12-22 10:41:46 
+ * @Last Modified by: CregskiN
+ * @Last Modified time: 2019-12-22 10:43:52
+ */
 const Router = require('koa-router');
 const bcrypt = require('bcryptjs');
 
-
-const {
-    RegisterValidator
-} = require('../../validators/validator');
-const {
-    User
-} = require('../../models/user');
-const {
-    success
-} = require('../../lib/helper');
+const { RegisterValidator } = require('../../validators/validator');
+const { User } = require('../../models/user');
+const { success } = require('../../lib/helper');
 
 
 const router = new Router();
@@ -27,7 +26,7 @@ router.post('/register', async (ctx, next) => {
     };
 
     await User.create(user);
-    success();
+    success("注册成功！");
 });
 
 

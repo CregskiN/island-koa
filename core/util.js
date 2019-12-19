@@ -49,7 +49,7 @@ const generateToken = function (uid, scope) {
     }, secretKey, { // 第三个参数可放加密算法
         expiresIn
     })
-    return token
+    return token;
 }
 
 

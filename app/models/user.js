@@ -1,18 +1,13 @@
 const bcrypt = require('bcryptjs');
 
 
-
-const {
-    sequelize
-} = require('../../core/db');
-const {
-    Sequelize,
-    Model
-} = require('sequelize');
+const { sequelize } = require('../../core/db');
+const { Sequelize, Model } = require('sequelize');
 
 // 继承自Model 用于管理数据库的 子类(Model)
 class User extends Model {
 
+    // 查：验证接收的password
     static async verifyEmailPassword(email, plainPassword) {
         const user = await User.findOne({
             where: {
@@ -20,7 +15,6 @@ class User extends Model {
             }
         })
         if (!user) {
-            console.log('账号不存在');
             throw new global.errs.AuthFailed('账号不存在');
         }
         // 查询到的密码 和 用户输入的密码是不一致的
@@ -32,6 +26,22 @@ class User extends Model {
         return user;
     }
 
+    // 查：数据库中user_openid相关信息
+    static async getUserByOpenid(openid) {
+        const user = await User.findOne({
+            where: {
+                user_openid: openid
+            }
+        })
+        return user;
+    }
+
+    // 增：以openid新增用户信息
+    static async registerByOpenid(openid) {
+        return await User.create({
+            user_openid: openid
+        })
+    }
 
 }
 

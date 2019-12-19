@@ -22,7 +22,7 @@
 ```
 
 ---
-+ ### token获取
++ ### 申请 token
 > POST &emsp; http://localhost:3000/v1/token
 ```
 // "type"
@@ -42,4 +42,11 @@
 {
     
 }
+```
+
+---
++ ### 验证 token
+> POST &emsp; http://localhost:3000/v1/verify
+```
+
 ```
