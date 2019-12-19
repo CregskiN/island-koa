@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/CregskiN/island-koa#readme",
   "dependencies": {
+    "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "cross-env": "^6.0.3",
     "jsonwebtoken": "^8.5.1",

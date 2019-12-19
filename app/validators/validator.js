@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-12-12 17:20:07 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-14 23:14:07
+ * @Last Modified time: 2019-12-17 18:20:43
  */
 
 const {
@@ -101,12 +101,13 @@ class TokenValidator extends LinValidator {
         ];
     }
 
+    // 判断type是否是枚举值
     validateLoginType(vals) {
         if (!vals.body.type) {
             throw new Error('type 必须是参数');
         }
         
-        if (LoginType.isThisType(vals.body.type)) {
+        if (!LoginType.isThisType(vals.body.type)) {
             throw new Error('type 参数不合法')
         }
     }

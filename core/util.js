@@ -39,13 +39,14 @@ const findMembers = function (instance, {
     return _find(instance)
 }
 
-const generateToken = function(uid, scope){
+// 生成token令牌
+const generateToken = function (uid, scope) {
     const secretKey = global.config.security.secretKey
     const expiresIn = global.config.security.expiresIn
     const token = jwt.sign({
         uid,
         scope
-    },secretKey,{
+    }, secretKey, { // 第三个参数可放加密算法
         expiresIn
     })
     return token

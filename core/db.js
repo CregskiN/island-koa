@@ -27,7 +27,7 @@ const sequelize = new Sequelize(dbName, user, password, {
 })
 
 sequelize.sync({
-    force: true,
+    force: false, // 每次启动删除原数据
 
 });
 

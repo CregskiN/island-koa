@@ -2,7 +2,7 @@
 .idea
 
 # config
-config
+config/
 
 # Logs
 logs
@@ -108,3 +108,6 @@ dist
 
 # TernJS port file
 .tern-port
+/config/
+/config/config.js
+/config/

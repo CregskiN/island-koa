@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-12-12 16:55:20 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-14 17:30:46
+ * @Last Modified time: 2019-12-17 18:54:42
  */
 const requireDirectory = require('require-directory');
 const Router = require('koa-router');
@@ -13,8 +13,8 @@ class InitManager {
     static initCore(app) {
         InitManager.app = app;
         InitManager.initLoadRouter();
-        InitManager.loadConfig();
         InitManager.loadHttpException();
+        InitManager.loadConfig();
     }
 
     // 批量导入、注册路由

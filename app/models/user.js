@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 
+
+
 const {
     sequelize
 } = require('../../core/db');
@@ -8,9 +10,28 @@ const {
     Model
 } = require('sequelize');
 
-
 // 继承自Model 用于管理数据库的 子类(Model)
 class User extends Model {
+
+    static async verifyEmailPassword(email, plainPassword) {
+        const user = await User.findOne({
+            where: {
+                user_email: email
+            }
+        })
+        if (!user) {
+            console.log('账号不存在');
+            throw new global.errs.AuthFailed('账号不存在');
+        }
+        // 查询到的密码 和 用户输入的密码是不一致的
+        const correct = bcrypt.compareSync(plainPassword, user.user_password);
+
+        if (!correct) {
+            throw new global.errs.AuthFailed('密码不正确');
+        }
+        return user;
+    }
+
 
 }
 
@@ -38,10 +59,10 @@ User.init({
         // 设计模式： set观察者模式
         // ES6 Reflect vue3.0
         type: Sequelize.STRING,
-        set(val){ // 加密操作
+        set(val) { // 加密操作
             const salt = bcrypt.genSaltSync(10) // 10是计算机生成salt的成本
             const psw = bcrypt.hashSync(val, salt);
-            this.setDataValue('user_password',psw); // Model 属性操作
+            this.setDataValue('user_password', psw); // Model 属性操作
         }
     },
 

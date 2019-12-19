@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-12-11 11:49:22 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-12 17:45:34
+ * @Last Modified time: 2019-12-17 19:09:07
  */
 const {
     HttpException
@@ -30,7 +30,7 @@ const catchError = async (ctx, next) => {
             }
             ctx.status = error.statusCode;
             
-        } else {
+        }  else {
             ctx.body = {
                 msg: 'we made a mistake 😁',
                 error_code: 999,
