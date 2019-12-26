@@ -2,18 +2,17 @@
  * @Author: CregskiN 
  * @Date: 2019-12-12 17:20:07 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-24 17:10:13
+ * @Last Modified time: 2019-12-25 20:00:27
  */
 
 const { LinValidator, Rule } = require('../../core/lin-validator-v2');
 const { User } = require('../models/user');
-const { LoginType } = require('../lib/enum');
+const { LoginType, ArtType } = require('../lib/enum');
 
 // id验证
 class PositiveIntegerValidator extends LinValidator {
     constructor() {
         super();
-
         this.id = [
             new Rule('isInt', '需要正整数', {
                 min: 1
@@ -73,7 +72,7 @@ class RegisterValidator extends LinValidator {
     }
 }
 
-// 验证注册token所需信息
+// 验证token 所包含信息是否合规
 class TokenValidator extends LinValidator {
     constructor() {
         super();
@@ -117,15 +116,54 @@ class NotEmptyValidator extends LinValidator {
     }
 }
 
-// 检测type
-function checkType(vals) {
+// 检测type // 此处体现了函数的局限性,使用class Checker代替 // 需要在likeValidator检测art_id 和 type
+// 区别： 函数式不能保存状态。 如需要对LoginType 和 ArtType 区分，只能从外部导入判断
+// 而class可以保存输入的type
 
-    if (!vals.body.type) {
+function checkLoginType(vals) {
+    let type = vals.body.type || vals.path.type;
+    if (!type) {
         throw new Error('type必须是参数');
     }
+    type = parseInt(type);
+    // this.parsed.path.type = type; // parsed为lin-validator内置存储已转换数据的位置
 
-    if (!LoginType.isThisType(vals.body.type)) {
+    if (!LoginType.isThisType(type)) {
         throw new Error('type参数不合法');
+    }
+}
+
+// 检查ArtType
+function checkArtType(vals) {
+    let type = vals.body.type || vals.path.type;
+    if (!type) {
+        throw new Error('type必须是参数');
+    }
+    type = parseInt(type);
+    // this.parsed.path.type = type; // parsed为lin-validator内置存储已转换数据的位置
+
+    if (!ArtType.isThisType(type)) {
+        throw new Error('type参数不合法');
+    }
+}
+
+// 验证传入type是否正确
+class Checker {
+    constructor(type) {
+        this.enumType = type;
+    }
+
+    check(vals) {
+        let type = vals.body.type || vals.path.type;
+        if (!type) {
+            throw new Error('type必须是参数');
+        }
+        type = parseInt(type);
+        // this.parsed.path.type = type; // parsed为lin-validator内置存储已转换数据的位置
+
+        if (!this.enumType.isThisType(type)) {
+            throw new Error('type参数不合法');
+        }
     }
 }
 
@@ -134,8 +172,14 @@ function checkType(vals) {
 class LikeValidator extends PositiveIntegerValidator {
     constructor() {
         super();
-        this.validateType = checkType;
+        this.validateType = checkArtType;
+        // const checker = new Checker(ArtType);
+        // this.validateType = checker.check.bind(checker); // 绑定this
     }
+}
+
+class ClassicValidator extends LikeValidator {
+
 }
 
 
@@ -144,5 +188,6 @@ module.exports = {
     RegisterValidator,
     TokenValidator,
     NotEmptyValidator,
-    LikeValidator
+    LikeValidator,
+    ClassicValidator
 }

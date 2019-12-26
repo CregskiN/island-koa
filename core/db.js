@@ -14,9 +14,9 @@ const sequelize = new Sequelize(dbName, user, password, {
         // create_time update_time delete_time
         timestamps: true,
         paranoid: true,
-        createAt: 'created_at',
-        updateAt: 'updated_at',
-        deleteAt: 'deleted_at',
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+        deletedAt: 'deleted_at',
         underscored: true,
         freezeTableName:true,
         scopes:{

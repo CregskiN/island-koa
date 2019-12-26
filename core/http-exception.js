@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-12-12 17:41:40 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-22 10:14:35
+ * @Last Modified time: 2019-12-25 13:28:15
  */
 
 // http 错误
@@ -78,7 +78,7 @@ class DislikeError extends HttpException{
     constructor(msg, errorCode) {
         super();
         this.statusCode = 400;
-        this.msg = msg || '你已取消点赞';
+        this.msg = msg || '你还未点赞';
         this.errorCode = 6002;
     }
 }
