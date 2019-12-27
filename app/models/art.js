@@ -2,11 +2,11 @@
  * @Author: CregskiN 
  * @Date: 2019-12-25 22:36:42 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-26 08:43:08
+ * @Last Modified time: 2019-12-26 18:02:16
  */
 
-const { Op } = require('sequelize');
 const { flatten } = require('lodash');
+const { Op } = require('sequelize');
 
 const { Movie, Sentence, Music } = require('./classic');
 
@@ -86,8 +86,12 @@ class Art {
             300: []
         };
 
+        // 遍历数组 for...of 循环出 key // ES6引入，为弥补for...in 的不足
+        // 遍历对象 for...in 循环出value
+
         for (let artInfo of artInfoList) {
             artInfoObj[artInfo.type].push(artInfo.art_id);
+            // artInfoObj value为各type的art_id
         }
 
         const arts = [];
@@ -103,7 +107,7 @@ class Art {
         return flatten(arts); // 展开二维变一维
     }
 
-    // in 查询
+    // in[art_id集合] 查询
     static async _getListByType(ids, type) {
         let arts = [];
 
