@@ -1,10 +1,3 @@
-/*
- * @Author: CregskiN 
- * @Date: 2019-12-20 21:10:38 
- * @Last Modified by: CregskiN
- * @Last Modified time: 2019-12-21 09:25:15
- */
- 
 > API开发流程
 1. 校验器
 
@@ -71,3 +64,6 @@ Error Code: 1292. Incorrect datetime value: '0000-00-00 00:00:00' for column 'cr
 ```
 
 ---
+
+## 部署记录
+
